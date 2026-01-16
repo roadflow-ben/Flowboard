@@ -36,12 +36,12 @@ def as_date(x):
 
 def pick_col(cols, candidates):
     """Return first matching column (case-insensitive contains)."""
-    cols_lower = {c.lower(): c for c in cols}
+    cols_str = [str(c) for c in cols]   # <-- FORCE column names to strings
+    cols_lower = {c.lower(): orig for c, orig in zip(cols_str, cols)}
     for cand in candidates:
-        for c in cols:
-            if cand in c.lower():
-                return c
-    # also exact-ish
+        for c_str, orig in zip(cols_str, cols):
+            if cand in c_str.lower():
+                return orig
     for cand in candidates:
         if cand in cols_lower:
             return cols_lower[cand]
