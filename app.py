@@ -629,14 +629,17 @@ active_day_list = [d for d in WEEKDAYS if st.session_state.get(f"day_{d}", False
 
 # Day labels row stays visible even when matrix is collapsed (only active days)
 if active_day_list:
-    label_cols = st.columns(1 + len(active_day_list))
+    col_spec = [2] + [1] * len(active_day_list)
+    label_cols = st.columns(col_spec)
+
     with label_cols[0]:
         st.markdown("**Area**")
     for i, dlab in enumerate(active_day_list, start=1):
         with label_cols[i]:
-            st.markdown(f"**{dlab[:3]}**")
+            st.markdown(f"<div style='text-align:center'><b>{dlab[:3]}</b></div>", unsafe_allow_html=True)
 else:
     st.info("No working days selected in the sidebar.")
+
 
 # Ensure matrix state exists (default: all Areas available every day)
 if "area_day_allowed" not in st.session_state:
@@ -662,7 +665,7 @@ with st.expander("Area availability matrix (expand to include/exclude Areas per 
         st.caption("No Areas detected.")
     else:
         for a in areas:
-            row_cols = st.columns([2] + [1]*len(active_day_list))
+            row_cols = st.columns(col_spec)
             with row_cols[0]:
                 st.write(a)
             for j, d in enumerate(active_day_list):
