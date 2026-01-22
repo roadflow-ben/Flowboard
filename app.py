@@ -660,12 +660,13 @@ with st.expander("Area availability matrix (expand to include/exclude Areas per 
         hdr_cols = st.columns(col_spec)
         with hdr_cols[0]:
             st.markdown("**Area**")
+
         for i, d in enumerate(active_day_list, start=1):
             with hdr_cols[i]:
-                st.markdown(
-                    f"<div style='text-align:center'><b>{d[:3]}</b></div>",
-                    unsafe_allow_html=True
-                )
+                hL, hM, hR = st.columns([1, 2, 1])
+                with hM:
+                    st.markdown(f"**{d[:3]}**")
+
 
         st.markdown(
             "<hr style='margin:6px 0 10px 0; opacity:0.2;'>",
