@@ -627,20 +627,6 @@ st.caption("Auto chooses the best Area for each day. Use Focus to override. Use 
 areas = sorted(df_work["_territory"].fillna("Unknown").astype(str).unique().tolist())
 active_day_list = [d for d in WEEKDAYS if st.session_state.get(f"day_{d}", False)]
 
-# Day labels row stays visible even when matrix is collapsed (only active days)
-if active_day_list:
-    col_spec = [2] + [1] * len(active_day_list)
-    label_cols = st.columns(col_spec)
-
-    with label_cols[0]:
-        st.markdown("**Area**")
-    for i, dlab in enumerate(active_day_list, start=1):
-        with label_cols[i]:
-            st.markdown(f"<div style='text-align:center'><b>{dlab[:3]}</b></div>", unsafe_allow_html=True)
-else:
-    st.info("No working days selected in the sidebar.")
-
-
 # Ensure matrix state exists (default: all Areas available every day)
 if "area_day_allowed" not in st.session_state:
     st.session_state.area_day_allowed = {d: {a: True for a in areas} for d in WEEKDAYS}
@@ -660,10 +646,32 @@ else:
     st.session_state.area_day_allowed = mat
 
 with st.expander("Area availability matrix (expand to include/exclude Areas per day)", expanded=False):
-    st.caption("Untick an Area on a specific day to prevent Auto (and scheduling) from using it that day. Re-tick to re-enable.")
+    st.caption(
+        "Untick an Area on a specific day to prevent Auto (and scheduling) from using it that day. Re-tick to re-enable."
+    )
+
     if not areas:
         st.caption("No Areas detected.")
     else:
+        # Use a shared column spec so headers align with checkboxes
+        col_spec = [2] + [1] * len(active_day_list)
+
+        # Header row (inside expander so padding matches)
+        hdr_cols = st.columns(col_spec)
+        with hdr_cols[0]:
+            st.markdown("**Area**")
+        for i, d in enumerate(active_day_list, start=1):
+            with hdr_cols[i]:
+                st.markdown(
+                    f"<div style='text-align:center'><b>{d[:3]}</b></div>",
+                    unsafe_allow_html=True
+                )
+
+        st.markdown(
+            "<hr style='margin:6px 0 10px 0; opacity:0.2;'>",
+            unsafe_allow_html=True
+        )
+
         for a in areas:
             row_cols = st.columns(col_spec)
             with row_cols[0]:
@@ -671,7 +679,9 @@ with st.expander("Area availability matrix (expand to include/exclude Areas per 
             for j, d in enumerate(active_day_list):
                 key = f"allow::{a}::{d}"
                 if key not in st.session_state:
-                    st.session_state[key] = bool(st.session_state.area_day_allowed.get(d, {}).get(a, True))
+                    st.session_state[key] = bool(
+                        st.session_state.area_day_allowed.get(d, {}).get(a, True)
+                    )
                 with row_cols[j + 1]:
                     st.checkbox("", key=key)
                 st.session_state.area_day_allowed[d][a] = bool(st.session_state[key])
