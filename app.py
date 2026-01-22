@@ -354,35 +354,38 @@ if "plan_df" not in st.session_state:
 
 
 # -----------------------------
-# Header
+# Header + Hero
 # -----------------------------
 st.markdown(
     """
-    <div style="margin-top:6px;">
-      <div style="display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;">
-        <div style="font-size:44px;font-weight:850;line-height:1;">Flowboard</div>
-        <div style="font-size:14px;opacity:0.75;font-weight:600;">Clarity before commitment.</div>
-      </div>
-
-      <div style="margin-top:14px;padding:14px 16px;border:1px solid rgba(0,0,0,0.06);border-radius:14px;background:rgba(46,125,50,0.06);max-width:900px;">
-        <div style="font-size:18px;font-weight:800;line-height:1.25;">
-          Plan a realistic week of site visits — one week at a time — before backlog becomes pressure.
-        </div>
-
-        <div style="margin-top:10px;font-size:14px;line-height:1.55;opacity:0.9;">
-          Flowboard turns a daunting list of future site visits into a clear, structured plan —
-          removing the chaos, respecting your available time, chosen working days,
-          and using light location grouping to keep each day achievable.
-        </div>
-
-        <div style="margin-top:10px;font-size:14px;font-style:italic;opacity:0.85;">
-          Overflow is expected. That’s the point.
-        </div>
-      </div>
+    <div style="display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;">
+      <div style="font-size:44px;font-weight:850;line-height:1;">Flowboard</div>
+      <div style="font-size:14px;opacity:0.75;font-weight:600;">Clarity before commitment.</div>
     </div>
     """,
     unsafe_allow_html=True
 )
+
+st.markdown(
+    """
+    <div style="margin-top:14px;padding:14px 16px;border:1px solid rgba(0,0,0,0.06);border-radius:14px;background:rgba(46,125,50,0.06);max-width:900px;">
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
+st.markdown(
+    """
+**Plan a realistic week of site visits — one week at a time — before backlog becomes pressure.**
+
+Flowboard turns a daunting list of future site visits into a clear, structured plan —  
+removing the chaos, respecting your available time, chosen working days,  
+and using light location grouping to keep each day achievable.
+
+*Overflow is expected. That’s the point.*
+    """
+)
+
 
 # -----------------------------
 # Sidebar: Week Setup
