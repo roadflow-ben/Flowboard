@@ -369,7 +369,7 @@ st.markdown(
           Plan a realistic week of site visits — one week at a time — before backlog becomes pressure.
         </div>
 
-        <div style="margin-top:10px;font-size:14px;line-height:1.5;opacity:0.9;">
+        <div style="margin-top:10px;font-size:14px;line-height:1.55;opacity:0.9;">
           Flowboard turns a daunting list of future site visits into a clear, structured plan —
           removing the chaos, respecting your available time, chosen working days,
           and using light location grouping to keep each day achievable.
@@ -383,7 +383,6 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
-
 
 # -----------------------------
 # Sidebar: Week Setup
