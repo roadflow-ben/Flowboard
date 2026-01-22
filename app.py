@@ -683,8 +683,12 @@ with st.expander("Area availability matrix (expand to include/exclude Areas per 
                         st.session_state.area_day_allowed.get(d, {}).get(a, True)
                     )
                 with row_cols[j + 1]:
-                    st.checkbox("", key=key)
+                    cL, cM, cR = st.columns([1, 2, 1])
+                    with cM:
+                        st.checkbox("", key=key)
+
                 st.session_state.area_day_allowed[d][a] = bool(st.session_state[key])
+
 
 # Build day->allowed Areas map for the planner (only for active days)
 day_allowed = {}
