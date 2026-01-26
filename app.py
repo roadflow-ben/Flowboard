@@ -59,6 +59,143 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+# -----------------------------
+# UI experiment: primary button = calm green (no layout changes)
+# -----------------------------
+st.markdown(
+    """
+    <style>
+      /* Streamlit primary buttons (covers most versions) */
+      button[kind="primary"],
+      div[data-testid="stButton"] button[data-testid="baseButton-primary"],
+      div[data-testid="stFormSubmitButton"] button[data-testid="baseButton-primary"] {
+        background-color: #2e7d32 !important;
+        border-color: #2e7d32 !important;
+        color: white !important;
+      }
+
+      /* Hover */
+      button[kind="primary"]:hover,
+      div[data-testid="stButton"] button[data-testid="baseButton-primary"]:hover,
+      div[data-testid="stFormSubmitButton"] button[data-testid="baseButton-primary"]:hover {
+        filter: brightness(0.92) !important;
+      }
+
+      /* Focus outline (keep it green, not red/blue) */
+      button[kind="primary"]:focus,
+      div[data-testid="stButton"] button[data-testid="baseButton-primary"]:focus,
+      div[data-testid="stFormSubmitButton"] button[data-testid="baseButton-primary"]:focus {
+        outline: 2px solid #2e7d32 !important;
+        outline-offset: 2px !important;
+        box-shadow: none !important;
+      }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+# -----------------------------
+# UI experiment: checkbox checked state = calm green (exact selector override)
+# -----------------------------
+st.markdown(
+    """
+    <style>
+      /* Override Streamlit/BaseWeb compiled checkbox class */
+      label[data-baseweb="checkbox"] .st-bj {
+        background-color: #2e7d32 !important;
+        border-color: #2e7d32 !important;
+        background-image: none !important;
+      }
+
+      /* Keep the tick visible */
+      label[data-baseweb="checkbox"] .st-bj svg,
+      label[data-baseweb="checkbox"] .st-bj svg path {
+        stroke: white !important;
+        fill: white !important;
+      }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+# -----------------------------
+# UI experiment: add white tick on checked boxes (since we removed background-image)
+# -----------------------------
+st.markdown(
+    """
+    <style>
+      /* Ensure the checkbox box can host an overlay */
+      label[data-baseweb="checkbox"] .st-bj {
+        position: relative !important;
+      }
+
+      /* Draw a simple white tick */
+      label[data-baseweb="checkbox"] .st-bj::after {
+        content: "" !important;
+        position: absolute !important;
+        left: 50% !important;
+        top: 50% !important;
+        width: 10px !important;
+        height: 6px !important;
+        border-left: 3px solid white !important;
+        border-bottom: 3px solid white !important;
+        transform: translate(-50%, -55%) rotate(-45deg) !important;
+        pointer-events: none !important;
+      }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+# -----------------------------
+# UI experiment: checkbox ↔ label alignment (Experiment 2A)
+# Scope: alignment only — no colour or logic changes
+# -----------------------------
+st.markdown(
+    """
+    <style>
+      /* Force checkbox row to align checkbox and label vertically */
+      div[data-testid="stCheckbox"] label {
+        display: flex !important;
+        align-items: center !important;
+      }
+
+      /* Slightly normalize text line height */
+      div[data-testid="stCheckbox"] label span {
+        line-height: 1.2 !important;
+      }
+
+      /* Ensure SVG checkbox sits centered */
+      div[data-testid="stCheckbox"] label svg {
+        margin-top: 0px !important;
+      }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+# -----------------------------
+# UI experiment: checkbox vertical nudge UP (Experiment 2B - revised)
+# Scope: alignment only — nudge checkbox widget upward
+# -----------------------------
+st.markdown(
+    """
+    <style>
+      /* Nudge the whole checkbox widget up slightly */
+      div[data-testid="stCheckbox"] {
+        margin-top: -0.4rem !important;   /* ~checkbox height; adjust if needed */
+      }
+
+      /* Keep internal spacing from re-adding the gap */
+      div[data-testid="stCheckbox"] > div {
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+      }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 WEEKDAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 LOAD_MODES = ["Light", "Normal", "Heavy"]  # Heavy = +20%
 LOAD_MULTIPLIER = {"Light": 0.85, "Normal": 1.00, "Heavy": 1.20}
